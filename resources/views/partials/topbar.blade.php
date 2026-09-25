@@ -35,7 +35,7 @@
                     x-transition:leave="transition ease-in duration-50"
                     x-transition:leave-start="opacity-100 scale-100"
                     x-transition:leave-end="opacity-0 scale-95"
-                    class="absolute left-full top-0 ml-2 mt-0 w-52 bg-white rounded-md shadow-lg z-20">
+                    class="mt-2 w-full bg-white rounded-md shadow-lg z-20 sm:absolute sm:left-full sm:top-0 sm:ml-2 sm:mt-0 sm:w-52">
                     <a href="{{ route('team-technic', [app()->getLocale()]) }}" class="block px-4 py-1 text-gray-800 hover:bg-gray-100">{{ __('Tim Teknis') }}</a>
                     <a href="{{ route('team-scientific', [app()->getLocale()]) }}" class="block px-4 py-1 text-gray-800 hover:bg-gray-100">Scientific Advisory</a>
                 </div>
@@ -51,15 +51,18 @@
     </a>
 
     <!-- Language switch -->
+    @php
+        $langParams = fn (string $lang) => array_merge(Route::current()?->parameters() ?? [], ['lang' => $lang]);
+    @endphp
     <div class="sm:flex gap-1 hidden">
-        <a href="{{ route(Route::currentRouteName(), 'id') }}" class="text-sm @if(App::getLocale() == 'id') font-semibold @else font-light text-gray-500 @endif">Indonesia</a>
+        <a href="{{ route(Route::currentRouteName(), $langParams('id')) }}" class="text-sm @if(App::getLocale() == 'id') font-semibold @else font-light text-gray-500 @endif">Indonesia</a>
         <a href="#" class="">|</a>
-        <a href="{{ route(Route::currentRouteName(), 'en') }}" class="text-sm @if(App::getLocale() == 'en') font-semibold @else font-light text-gray-500 @endif">English</a>
+        <a href="{{ route(Route::currentRouteName(), $langParams('en')) }}" class="text-sm @if(App::getLocale() == 'en') font-semibold @else font-light text-gray-500 @endif">English</a>
     </div>
 
     <div class="sm:hidden gap-1 flex">
-        <a href="{{ route(Route::currentRouteName(), 'id') }}" class="text-sm @if(App::getLocale() == 'id') font-semibold @else font-light text-gray-500 @endif">ID</a>
+        <a href="{{ route(Route::currentRouteName(), $langParams('id')) }}" class="text-sm @if(App::getLocale() == 'id') font-semibold @else font-light text-gray-500 @endif">ID</a>
         <a href="#" class="">|</a>
-        <a href="{{ route(Route::currentRouteName(), 'en') }}" class="text-sm @if(App::getLocale() == 'en') font-semibold @else font-light text-gray-500 @endif">EN</a>
+        <a href="{{ route(Route::currentRouteName(), $langParams('en')) }}" class="text-sm @if(App::getLocale() == 'en') font-semibold @else font-light text-gray-500 @endif">EN</a>
     </div>
 </div>

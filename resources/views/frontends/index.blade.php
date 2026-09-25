@@ -8,54 +8,29 @@
     @include('partials.topbar')
 
      <div class="max-w-6xl mx-auto px-4 ">
-        <a href="#" class=" px-1 py-1  text-biru-wallacea bg-mapbiomasid text-white">News</a>
+        <a href="#" class=" px-1 py-1  text-biru-wallacea bg-mapbiomasid text-white">{{__('News') }}</a>
 
 
-        <div class="flex justify-between sm:flex-row flex-col gap-10 mt-3">
-            <div class="flex flex-col  sm:w-[27%] w-full">
-                <div>
-                    <img src="{{ asset('assets/landy.jpeg') }}" alt="Mapbiomas Indonesia" class="h-44 w-full object-cover object-center">
-
-                </div>
-                <a class="font-light text-sm mt-4">{{__('Agustus') }} 2024</a>
-                <a href="#" class="font-bold">{{__('Presentasi MapBiomas Indonesia kepada BRGM') }}</a>
-                <p class="mt-3 font-light text-sm">{{__('MapBiomas Indonesia menyampaikan bahwa land cover dynamics 3.0 akan memuat data dan peta berbagai kelas yang relevan dengan Badan Restorasi Gambut dan Mangrove.') }}</p>
-            </div>
-            <div class="flex flex-col sm:w-[27%] w-full">
-                <div>
-                    <img src="https://fire.mapbiomas.id/storage/files/photos/8AwhOdHFHoi2me7mkeDxtHTcXnUzQauMhh4EAVlT.jpg" alt="Mapbiomas Fire" class="h-44 w-full object-cover object-center">
-
-                </div>
-                <a class="font-light text-sm mt-4">April 2024</a>
-                @if (app()->getLocale() == 'id')
-                    <a href="https://fire.mapbiomas.id/id/news/2/pelatihan-lanjutan-pemetaan-lahan-terbakar-di-ipam-brasilia" class="font-bold">Pelatihan Lanjutan Pemetaan Lahan Terbakar di IPAM Brasilia</a>
-                    <p class="mt-3 font-light text-sm">Pengetahuan yang diperoleh melalui pelatihan ini akan dikembangkan MapBiomas Indonesia membangun MapBiomas Indonesia | FIRE yang direncanakan rilis pada kuartal ketiga atau keempat 2024.</p>
-
-                @else
-                    <a href="https://fire.mapbiomas.id/en/news/2/pelatihan-lanjutan-pemetaan-lahan-terbakar-di-ipam-brasilia" class="font-bold">Advanced Training in Burnt Land Mapping with IPAM in Brasilia</a>
-                    <p class="mt-3 font-light text-sm">MapBiomas Indonesia will apply knowledge secured through this training to develop MapBiomas Indonesia | FIRE, which is planned for release in the third or fourth quarter of 2024</p>
-
-                 @endif
-
-            </div>
-            <div class="flex flex-col sm:w-[27%] w-full">
-                <div>
-                    <img src="https://landy.mapbiomas.id/storage/files/photos/pLrDqTjBhcfRxvPPhc5dF0jfPNUGUiPqgeCFXrpJ.jpg" alt="Mapbiomas Indonesia" class="h-44 w-full object-cover object-center">
-
-                </div>
-                <a class="font-light text-sm mt-4">April 2024</a>
-                    @if (app()->getLocale() == 'id')
-                        <a href="https://landy.mapbiomas.id/id/news/8/belajar-mapbiomas-alerta-di-brasil" class="font-bold">Belajar MapBiomas Alerta di Brasil</a>
-                        <p class="mt-3 font-light text-sm">Kunjungan ke São Paulo, Brazil, ini untuk mempelajari MapBiomas Alerta, sebuah platform pemantauan deforestasi di Brazil, sebagai referensi mengembangkan platform sejenis di Indonesia.</p>
-
-                    @else
-                        <a href="https://landy.mapbiomas.id/en/news/8/belajar-mapbiomas-alerta-di-brasil" class="font-bold">Learning Brazil’s MapBiomas Alerta</a>
-                        <p class="mt-3 font-light text-sm">The São Paulo, Brazil, trip was designed to learn MapBiomas Alerta, a deforestation monitoring platform in Brazil, as an effort to develop a similar platform in Indonesia.</p>
-
+        <div class="flex justify-between lg:flex-row flex-col gap-10 mt-3">
+            @forelse ($news as $item)
+                <div class="flex flex-col lg:w-[27%] w-full">
+                    @if ($item->image_path)
+                        <div>
+                            <img src="{{ media_url($item->image_path) }}" alt="{{ $item->bi('title') }}"
+                                 class="h-44 w-full object-cover object-center">
+                        </div>
                     @endif
-            </div>
-
-
+                    <a class="font-light text-sm mt-4">{{ $item->published_at?->translatedFormat('F Y') }}</a>
+                    @if ($item->isExternal())
+                        <a href="{{ $item->external_url }}" target="_blank" rel="noopener" class="font-bold hover:text-fire">{{ $item->bi('title') }}</a>
+                    @else
+                        <a href="{{ route('news.show', [app()->getLocale(), $item->slug]) }}" class="font-bold hover:text-fire">{{ $item->bi('title') }}</a>
+                    @endif
+                    <p class="mt-3 font-light text-sm">{{ $item->bi('excerpt') }}</p>
+                </div>
+            @empty
+                <p class="font-light text-sm py-8">{{__('Tidak ada berita untuk saat ini.') }}</p>
+            @endforelse
         </div>
     </div>
 
@@ -68,30 +43,21 @@
     </div>
 
     <div class="max-w-6xl mx-auto px-4 mt-12">
-        <div class="flex sm:flex-row  justify-between flex-col gap-10 mt-3">
-            <div class="flex flex-col sm:w-[27%] w-full items-center">
-                <a href="https://landy.mapbiomas.id" target="_blank">
-                    <img src="{{ asset('assets/logo landy.png') }}" alt="Mapbiomas Indonesia" class="h-12">
-
-                </a>
-                <p class=" mt-4 text-sm text-center font-light">{{__('Menampilkan dinamika tutupan lahan Indonesia. Statistik, peta, hingga transisi tutupan, pun penampalannya dengan tematik penguasaan lahan tersedia di platform ini.') }}</p>
-            </div>
-            <div class="flex flex-col sm:w-[27%] w-full items-center">
-                <a href="https://fire.mapbiomas.id/id" target="_blank">
-                    <img src="{{ asset('assets/logo-fire.png') }}" alt="Mapbiomas Indonesia" class="h-12">
-
-                </a>
-                <p class=" mt-4 text-sm text-center font-light">{{__('Menyajikan data dan peta area terbakar di Indonesia melalui pemaksimalkan Google Earth Engine dan pendekatan deep learning terhadap citra satelit yang terbuka bagi publik.') }}</p>
-            </div>
-            <div class="flex flex-col sm:w-[27%] w-full items-center">
-                <a href="https://plataforma.alerta.mapbiomas.id/" target="_blank">
-                    <img src="{{ asset('assets/logo-alerta.png') }}" alt="Mapbiomas Indonesia" class="h-12">
-
-                </a>
-                <p class=" mt-4 text-sm text-center font-light">{{__('Setiap alert deforestasi diverifikasi, lalu divalidasi citra satelit resolusi tinggi terkini, sehingga tersaji data dan peta deforestasi aktual.') }}</p>
-            </div>
-
-
+        <div class="flex lg:flex-row  justify-between flex-col gap-10 mt-3">
+            @forelse ($initiatives as $initiative)
+                <div class="flex flex-col lg:w-[27%] w-full items-center">
+                    <a href="{{ $initiative->platform_url }}" target="_blank" rel="noopener">
+                        @if ($initiative->logo_path)
+                            <img src="{{ media_url($initiative->logo_path) }}" alt="{{ $initiative->name }}" class="h-12">
+                        @else
+                            <span class="flex h-12 items-center text-xl font-bold" style="color: {{ $initiative->accent_color }}">{{ $initiative->name }}</span>
+                        @endif
+                    </a>
+                    <p class=" mt-4 text-sm text-center font-light">{{ $initiative->bi('description') }}</p>
+                </div>
+            @empty
+                <p class="font-light text-sm py-8 text-center w-full">{{__('Belum ada inisiatif.') }}</p>
+            @endforelse
         </div>
     </div>
 

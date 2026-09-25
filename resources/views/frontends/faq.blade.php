@@ -24,7 +24,7 @@
                         href="#"
                         @click.prevent="icon = false"
                     @click="open.includes('{{$item->id}}') ? open = open.filter(i => i !== '{{$item->id}}') : open.push('{{$item->id}}')">
-                        {!! $item->question !!}
+                        {{ $item->question }}
                     </a>
                     <svg
                         x-show="icon"

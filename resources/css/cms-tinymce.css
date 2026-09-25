@@ -1,0 +1,437 @@
+/*
+|--------------------------------------------------------------------------
+| TinyMCE → CMS design tokens
+|--------------------------------------------------------------------------
+| Re-skins the self-hosted oxide skin so the editor matches the CMS
+| (monochrome surfaces, green accent, Open Sans). Values are read from
+| the same tokens app.css uses, so dark mode flips automatically.
+| Rules are prefixed with `html` to out-rank the skin stylesheet that
+| TinyMCE injects into <head> at init time.
+*/
+
+/* --- Base chrome ------------------------------------------------------ */
+
+html .tox-tinymce {
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    box-shadow: none;
+}
+
+html .tox-tinymce-aux { font-family: var(--font-sans); }
+
+html .tox .tox-edit-area {
+    background-color: var(--surface);
+    border: 0;
+}
+
+/* Header wrapper around menubar + toolbar (skins paint it #fff / #222f3e) */
+html .tox .tox-editor-header,
+html .tox:not(.tox-tinymce-inline) .tox-editor-header {
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--line);
+    box-shadow: none;
+}
+
+/* --- Toolbar / menubar ------------------------------------------------- */
+
+html .tox .tox-menubar,
+html .tox .tox-promotion {
+    background: none;
+    background-color: var(--surface);
+}
+
+html .tox .tox-toolbar-overlord { background-color: var(--surface); }
+
+html .tox .tox-toolbar,
+html .tox .tox-toolbar__overflow,
+html .tox .tox-toolbar__primary {
+    background-color: var(--surface);
+    background-image: repeating-linear-gradient(var(--line) 0 1px, transparent 1px 39px);
+}
+
+/* Toolbar icon buttons */
+html .tox .tox-tbtn {
+    background: transparent;
+    border-radius: 5px;
+    color: var(--ink-muted);
+    font-size: 12px;
+}
+
+html .tox .tox-tbtn svg { fill: var(--ink-muted); }
+
+html .tox .tox-tbtn:hover,
+html .tox .tox-tbtn:focus { background: var(--hover); color: var(--ink); }
+
+html .tox .tox-tbtn:hover svg,
+html .tox .tox-tbtn:focus svg { fill: var(--ink); }
+
+html .tox .tox-tbtn.tox-tbtn--active,
+html .tox .tox-tbtn.tox-tbtn--enabled {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+html .tox .tox-tbtn.tox-tbtn--active svg,
+html .tox .tox-tbtn.tox-tbtn--enabled svg { fill: var(--accent); }
+
+html .tox .tox-tbtn--disabled { background: transparent; color: var(--ink-subtle); opacity: 1; }
+
+html .tox .tox-tbtn--disabled svg,
+html .tox .tox-tbtn:disabled svg { fill: var(--ink-subtle); }
+
+html .tox .tox-mbtn[disabled] { background: transparent; color: var(--ink-subtle); }
+
+html .tox .tox-number-input button:disabled,
+html .tox .tox-number-input input:disabled {
+    background: transparent;
+    color: var(--ink-subtle);
+}
+
+html .tox .tox-textfield[disabled],
+html .tox .tox-textarea[disabled],
+html .tox .tox-toolbar-textfield[disabled] {
+    background-color: var(--hover);
+    border-color: var(--line);
+    color: var(--ink-subtle);
+}
+
+/* Keyboard focus ring on buttons (skin hardcodes blue) */
+html .tox .tox-tbtn:focus { background: var(--hover); }
+
+html .tox .tox-tbtn:focus::after {
+    border-radius: 5px;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* Split buttons and bespoke selects (font size, alignment) in the toolbar */
+html .tox .tox-split-button,
+html .tox .tox-tbtn--bespoke,
+html .tox .tox-tbtn--select {
+    background: transparent;
+    color: var(--ink-muted);
+    border-radius: 5px;
+}
+
+html .tox .tox-split-button__chevron svg,
+html .tox .tox-tbtn--select svg,
+html .tox .tox-tbtn--bespoke svg { fill: var(--ink-subtle); }
+
+html .tox .tox-split-button:hover,
+html .tox .tox-split-button:focus,
+html .tox .tox-split-button:focus-visible {
+    background: var(--hover);
+    color: var(--ink);
+}
+
+/* Menubar text buttons */
+html .tox .tox-mbtn {
+    background: transparent;
+    border-radius: 5px;
+    color: var(--ink-muted);
+    font-size: 12px;
+}
+
+html .tox .tox-mbtn svg { fill: var(--ink-muted); }
+
+html .tox .tox-mbtn:hover,
+html .tox .tox-mbtn:focus:not(:disabled),
+html .tox .tox-mbtn--active {
+    background: var(--hover);
+    color: var(--ink);
+}
+
+html .tox .tox-mbtn:hover svg,
+html .tox .tox-mbtn:focus svg,
+html .tox .tox-mbtn--active svg { fill: var(--ink); }
+
+/* --- Statusbar --------------------------------------------------------- */
+
+html .tox .tox-statusbar {
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    color: var(--ink-muted);
+    font-size: 11px;
+}
+
+html .tox .tox-statusbar a,
+html .tox .tox-statusbar__path-item { color: var(--ink-muted); }
+
+html .tox .tox-statusbar a:hover,
+html .tox .tox-statusbar__path-item:hover { color: var(--accent); }
+
+html .tox .tox-statusbar__resize-handle svg { fill: var(--ink-subtle); }
+
+html .tox .tox-statusbar__text-charset,
+html .tox .tox-statusbar__wordcount { color: var(--ink-muted); }
+
+/* --- Dropdown menus ----------------------------------------------------- */
+
+html .tox .tox-menu {
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.14), 0 4px 10px -4px rgba(0, 0, 0, 0.08);
+}
+
+html .tox .tox-menu__title,
+html .tox .tox-menu__label,
+html .tox .tox-menu__label h1, html .tox .tox-menu__label h2, html .tox .tox-menu__label h3,
+html .tox .tox-menu__label h4, html .tox .tox-menu__label h5, html .tox .tox-menu__label h6,
+html .tox .tox-menu__label p { color: var(--ink); }
+
+html .tox .tox-collection__item {
+    border-radius: 4px;
+    color: var(--ink);
+    font-size: 13px;
+}
+
+html .tox .tox-collection__item svg { fill: currentColor; }
+
+html .tox .tox-collection--list .tox-collection__item--active:not(.tox-collection__item--state-disabled) {
+    background-color: var(--hover);
+    color: var(--ink);
+}
+
+html .tox .tox-collection--grid .tox-collection__item--enabled:not(.tox-collection__item--state-disabled) {
+    background-color: var(--hover);
+    color: var(--ink);
+}
+
+html .tox .tox-collection__item--enabled { color: var(--accent); }
+
+html .tox .tox-collection__item--state-disabled {
+    background-color: transparent;
+    color: var(--ink-subtle);
+}
+
+html .tox .tox-collection__item-accessory,
+html .tox .tox-collection__item-caret { color: var(--ink-subtle); }
+
+/* --- Text fields, selects, textareas ----------------------------------- */
+
+html .tox .tox-listboxfield .tox-listbox--select,
+html .tox .tox-textarea,
+html .tox .tox-textfield,
+html .tox .tox-toolbar-textfield {
+    background-color: var(--surface);
+    border-color: var(--line-strong);
+    border-radius: 6px;
+    box-shadow: none;
+    color: var(--ink);
+}
+
+html .tox .tox-textfield::placeholder,
+html .tox .tox-textarea::placeholder { color: var(--ink-subtle); }
+
+html .tox .tox-custom-editor:focus-within,
+html .tox .tox-focusable-wrapper:focus,
+html .tox .tox-listboxfield .tox-listbox--select:focus,
+html .tox .tox-textarea-wrap:focus-within,
+html .tox .tox-textarea:focus,
+html .tox .tox-textfield:focus,
+html .tox .tox-toolbar-textfield:focus {
+    background-color: var(--surface);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+    outline: 0;
+}
+
+/* --- Dialogs ------------------------------------------------------------ */
+
+html .tox .tox-dialog-wrap__backdrop { background-color: rgba(0, 0, 0, 0.5); }
+
+html .tox .tox-dialog-wrap__backdrop--opaque { background-color: rgba(0, 0, 0, 0.7); }
+
+html .tox .tox-dialog {
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.25);
+    color: var(--ink);
+}
+
+html .tox .tox-dialog__header {
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    padding: 12px 16px;
+}
+
+html .tox .tox-dialog__title {
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+html .tox .tox-dialog__body-content {
+    background-color: var(--surface);
+    color: var(--ink);
+}
+
+html .tox .tox-dialog__footer {
+    background-color: var(--surface);
+    border-top: 1px solid var(--line);
+    padding: 12px 16px;
+}
+
+html .tox .tox-dialog__busy-spinner {
+    background-color: color-mix(in srgb, var(--canvas) 70%, transparent);
+}
+
+/* Dialog buttons — primary / secondary / naked, like x-cms.button */
+html .tox .tox-button {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    border-radius: 6px;
+    color: var(--accent-fg);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+}
+
+html .tox .tox-button:hover:not(:disabled),
+html .tox .tox-button:focus:not(:disabled),
+html .tox .tox-button:active:not(:disabled) {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+    color: var(--accent-fg);
+}
+
+html .tox .tox-button:focus:not(:disabled)::before {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+html .tox .tox-button[disabled] {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: color-mix(in srgb, var(--accent-fg) 50%, transparent);
+}
+
+html .tox .tox-button--secondary {
+    background-color: var(--surface);
+    border-color: var(--line-strong);
+    color: var(--ink);
+}
+
+html .tox .tox-button--secondary:hover:not(:disabled),
+html .tox .tox-button--secondary:focus:not(:disabled) {
+    background-color: var(--hover);
+    border-color: var(--line-strong);
+    color: var(--ink);
+}
+
+html .tox .tox-button--secondary[disabled] {
+    background-color: var(--hover);
+    border-color: var(--line);
+    color: var(--ink-subtle);
+}
+
+html .tox .tox-button--naked {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--ink-muted);
+}
+
+html .tox .tox-button--naked:hover:not(:disabled),
+html .tox .tox-button--naked:focus:not(:disabled) {
+    background-color: var(--hover);
+    border-color: transparent;
+    color: var(--ink);
+}
+
+html .tox .tox-button--naked svg { fill: currentColor; }
+
+/* Dismiss (close) button in dialog headers */
+html .tox .tox-dialog__header .tox-button {
+    background: transparent;
+    border-color: transparent;
+    color: var(--ink-muted);
+}
+
+html .tox .tox-dialog__header .tox-button:hover:not(:disabled) {
+    background: var(--hover);
+    border-color: transparent;
+    color: var(--ink);
+}
+
+/* Dialog labels & form groups */
+html .tox .tox-dialog__body-content .tox-label {
+    color: var(--ink-muted);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+html .tox .tox-form__group--error,
+html .tox .tox-dialog__body-content .tox-form__group .tox-form__group--error { color: var(--danger); }
+
+/* Body nav tabs (help dialog etc.) */
+html .tox .tox-dialog__body-nav-item { color: var(--ink-muted); }
+
+html .tox .tox-dialog__body-nav-item:focus { background-color: var(--hover); }
+
+html .tox .tox-dialog__body-nav-item--active {
+    border-bottom-color: var(--accent);
+    color: var(--ink);
+}
+
+/* --- Inline popups / notifications -------------------------------------- */
+
+/* Floating toolbar overflow rendered inside aux containers (dialogs) */
+html .tox.tox-tinymce-aux .tox-toolbar__overflow {
+    background-color: var(--surface);
+    border-radius: 6px;
+    box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.14);
+}
+
+html .tox .tox-pop .tox-pop__dialog {
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.14);
+}
+
+html .tox .tox-notification {
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--ink-muted);
+}
+
+html .tox .tox-notification p,
+html .tox .tox-notification-inner { color: var(--ink-muted); }
+
+html .tox .tox-notification--warn,
+html .tox .tox-notification--warning {
+    background-color: var(--surface);
+    border-color: var(--line);
+    color: var(--ink-muted);
+}
+
+/* Full-page editor views (code view drawer etc.) */
+html .tox .tox-view-wrap,
+html .tox .tox-view-wrap__slot-container { background-color: var(--surface); }
+
+/* --- Misc widgets -------------------------------------------------------- */
+
+/* Table insert picker selected cells (skin hardcodes blue) */
+html .tox .tox-insert-table-picker__selected {
+    background-color: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+/* Checkbox (image dialog "caption" etc.) */
+html .tox .tox-checkbox-icon__checked svg { fill: var(--accent); }
+html .tox .tox-checkbox-icon__unchecked svg { fill: var(--ink-subtle); }
+
+/* Tooltips invert like the CMS */
+html .tox .tox-tooltip__body {
+    background-color: var(--ink);
+    border-radius: 6px;
+    color: var(--canvas);
+    font-weight: 500;
+}
+
+/* Hide the editor focus outline the skin draws on .tox-edit-area::before
+   (highlight_on_focus is disabled in this CMS) */
+html .tox .tox-edit-area::before { border-color: transparent; }

@@ -1,50 +1,30 @@
 <div class="border-t-2 border-[#86B696] py-6 w-full h-full mt-12 bg-gray-200 px-4">
-        <div class="flex sm:flex-row flex-col items-center overflow overflow-auto sm:gap-32 gap-4 max-w-6xl mx-auto">
-            <div class="w-full sm:w-10/12 ">
-                <h1>Co-creators</h1>
-                <div class="flex justify-between w-full flex-wrap">
-                    <a href="https://auriga.or.id/" target="_blank">
-                        <img class="h-10 mt-2" src="{{ asset('assets/logos/AurigaPNG.png') }}" alt="">
+    <div class="flex sm:flex-row flex-col items-center sm:gap-10 lg:gap-32 gap-4 max-w-6xl mx-auto">
+        <div class="w-full sm:flex-1 min-w-0">
+            <h1>Co-creators</h1>
+            <div class="flex justify-between w-full flex-wrap gap-4">
+                @forelse ($coCreators as $partner)
+                    <a href="{{ $partner->url ?? '#' }}" target="_blank" rel="noopener" title="{{ $partner->name }}">
+                        <img src="{{ media_url($partner->logo_path) }}" alt="{{ $partner->name }}"
+                             class="{{ $loop->first ? 'h-10 mt-2' : 'h-12' }}">
                     </a>
-                    <a href="https://www.jeratpapua.org/" target="_blank">
-                        <img src="{{ asset('assets/logos/logo2_color.png') }}" alt="" class="h-12 ">
-                    </a>
-                    <a href="https://saveourborneo.org/" target="_blank">
-                        <img src="{{ asset('assets/logos/logo3_color.png') }}" alt="" class="h-12">
-                    </a>
-                    <a href="http://greenofborneo.id/" target="_blank">
-                        <img src="{{ asset('assets/logos/logo4_color.png') }}" alt="" class="h-12">
-                    </a>
-                    <a href="https://www.haka.or.id/" target="_blank">
-                        <img src="{{ asset('assets/logos/logo5-x.png') }}" alt="" class="h-12">
-                    </a>
-                    <a href="http://mnukwarpapua.id/" target="_blank">
-                        <img src="{{ asset('assets/logos/logo6-x.png') }}" alt="" class="h-12">
-                    </a>
-                    <a href="https://hutaninstitute.or.id/" target="_blank">
-                        <img src="{{ asset('assets/logos/logo7-x.png') }}" alt="" class="h-12">
-                    </a>
-                    <a href="http://yayasangenesisbengkulu.or.id/" target="_blank">
-                        <img src="{{ asset('assets/logos/logo8-x.png') }}" alt="" class="h-12">
-                    </a>
-                     <a href="https://komiu.id/" target="_blank">
-                        <img src="{{ asset('assets/logos/logo9-x.png') }}" alt="" class="h-12">
-                    </a>
-                    <a href="http://sampankalimantan.id/" target="_blank">
-                        <img src="{{ asset('assets/logos/logo10-x.png') }}" alt="" class="h-12">
-                    </a>
-
-                </div>
+                @empty
+                    <p class="text-sm">—</p>
+                @endforelse
             </div>
+        </div>
 
-
-            <div class="sm:w-2/12 w-full">
-                <h1 class="">Supported by</h1>
-                <a href="https://woods-wayside.org/" target="_blank" class="">
-                    <img src="{{ asset('assets/logos/logo12-x.png') }}" alt="" class="h-12">
-                </a>
+        <div class="sm:w-2/12 w-full">
+            <h1 class="">Supported by</h1>
+            <div class="flex flex-wrap gap-4">
+                @forelse ($supporters as $partner)
+                    <a href="{{ $partner->url ?? '#' }}" target="_blank" rel="noopener" title="{{ $partner->name }}">
+                        <img src="{{ media_url($partner->logo_path) }}" alt="{{ $partner->name }}" class="h-12">
+                    </a>
+                @empty
+                    <p class="text-sm">—</p>
+                @endforelse
             </div>
-
-
         </div>
     </div>
+</div>

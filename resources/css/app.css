@@ -2,20 +2,104 @@
 
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
+@import './cms-tinymce.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-@theme {
-    --font-sans: 'Open Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+|--------------------------------------------------------------------------
+| Semantic design tokens (light / dark)
+|--------------------------------------------------------------------------
+| Used by the CMS (Vercel-style monochrome UI). Public frontend keeps its
+| own brand utilities below. Values flip via the `.dark` class on <html>.
+*/
+:root {
+    --canvas: #fafafa;
+    --surface: #ffffff;
+    --line: #e5e5e5;
+    --line-strong: #d4d4d4;
+    --ink: #171717;
+    --ink-muted: #737373;
+    --ink-subtle: #a3a3a3;
+    --hover: #f5f5f5;
+    --accent: #4e7a5e;
+    --accent-hover: #436b50;
+    --accent-fg: #ffffff;
+    --accent-soft: #e9f4ed;
+    --danger: #e5484d;
+    --danger-hover: #d93a3f;
 }
 
-p a:link {
-  color: #E17367;
+.dark {
+    --canvas: #0a0a0a;
+    --surface: #151515;
+    --line: #2e2e2e;
+    --line-strong: #404040;
+    --ink: #ededed;
+    --ink-muted: #a1a1a1;
+    --ink-subtle: #6f6f6f;
+    --hover: #1f1f1f;
+    --accent: #86b696;
+    --accent-hover: #98c4a6;
+    --accent-fg: #0a0a0a;
+    --accent-soft: #1b2a20;
+    --danger: #e5484d;
+    --danger-hover: #f2555a;
 }
+
+@theme inline {
+    --font-sans: 'Open Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-canvas: var(--canvas);
+    --color-surface: var(--surface);
+    --color-line: var(--line);
+    --color-line-strong: var(--line-strong);
+    --color-ink: var(--ink);
+    --color-ink-muted: var(--ink-muted);
+    --color-ink-subtle: var(--ink-subtle);
+    --color-hover: var(--hover);
+    --color-accent: var(--accent);
+    --color-accent-hover: var(--accent-hover);
+    --color-accent-fg: var(--accent-fg);
+    --color-accent-soft: var(--accent-soft);
+    --color-danger: var(--danger);
+    --color-danger-hover: var(--danger-hover);
+}
+
+@layer base {
+    html { @apply scroll-smooth; }
+    body { @apply bg-canvas text-ink antialiased; }
+    ::selection { background: color-mix(in srgb, var(--accent) 30%, transparent); }
+}
+
+/* Brand green input focus ring, used across CMS form controls */
+.cms-focus:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+/* x-cloak helper for Alpine */
+[x-cloak] { display: none !important; }
+
+/* Subtle checkerboard behind CMS image-upload previews (transparency aid) */
+.cms-checker {
+    background-image:
+        linear-gradient(45deg, color-mix(in srgb, var(--ink) 4%, transparent) 25%, transparent 25%),
+        linear-gradient(-45deg, color-mix(in srgb, var(--ink) 4%, transparent) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, color-mix(in srgb, var(--ink) 4%, transparent) 75%),
+        linear-gradient(-45deg, transparent 75%, color-mix(in srgb, var(--ink) 4%, transparent) 75%);
+    background-size: 14px 14px;
+    background-position: 0 0, 0 7px, 7px -7px, -7px 0;
+}
+
+/*--- Public frontend brand palette (keep untouched) ---*/
 
 .text-mapbiomasid{
     color: #86B696;
@@ -53,14 +137,14 @@ p a:link {
 }
 
 a:link {
-  /* color: #E17367; */ /* Remove or comment this out */
   text-decoration: none;
 }
 
-/* Add this more specific rule at the end of your file */
-p a:link, p a:visited, p a:hover, p a:active {
+/* Coral links inside frontend rich-text content only
+   (scoped so CMS prose is not forced coral) */
+.frontend p a:link,
+.frontend p a:visited,
+.frontend p a:hover,
+.frontend p a:active {
   color: #E17367 !important;
 }
-
-
-

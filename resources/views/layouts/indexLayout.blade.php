@@ -27,7 +27,7 @@
     </script>
 </head>
 
-<body class="font-sans">
+<body class="frontend font-sans">
 
     @yield('content')
     @stack('scripts')

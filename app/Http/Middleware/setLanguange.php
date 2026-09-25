@@ -15,8 +15,14 @@ class setLanguange
      */
     public function handle(Request $request, Closure $next): Response
     {
-         \App::setLocale($request->lang);
-        return $next($request);
+        $lang = $request->route('lang');
+
+        if (is_string($lang) && in_array($lang, ['id', 'en'], true)) {
+            app()->setLocale($lang);
+        } else {
+            app()->setLocale(config('app.fallback_locale', 'en'));
+        }
+
         return $next($request);
     }
 }
