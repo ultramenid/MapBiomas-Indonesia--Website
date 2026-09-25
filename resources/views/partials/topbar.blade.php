@@ -40,9 +40,6 @@
                     <a href="{{ route('team-scientific', [app()->getLocale()]) }}" class="block px-4 py-1 text-gray-800 hover:bg-gray-100">Scientific Advisory</a>
                 </div>
             </div>
-
-            <a href="{{ route('faq', [app()->getLocale()]) }}" class="block px-4 py-1 text-gray-800 hover:bg-gray-100">{{ __('Jejaring') }}</a>
-            <a href="{{ route('faq', [app()->getLocale()]) }}" class="block px-4 py-1 text-gray-800 hover:bg-gray-100">{{ __('FAQ') }}</a>
         </div>
     </div>
 
